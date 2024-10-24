@@ -1,46 +1,38 @@
 import Phaser from "phaser";
-
 import SceneKeys from "../consts/SceneKeys";
 
-export default class GameOver extends Phaser.Scene
-{
-    constructor()
-    {
-        super(SceneKeys.GameOver)
+export default class GameOver extends Phaser.Scene {
+    constructor() {
+        super(SceneKeys.GameOver);
     }
 
-    create()
-    {
-        //destructuracion de objetos
-        const {width, height} = this.scale
-        /* Esto es lo mismo que haber escrito 
-        const width = this.scale.width
-        const height = this.scale.height
+    create() {
+        const { width, height } = this.scale;
+        const x = width * 0.5;
+        const y = height * 0.5;
 
-        */
+        const modal = this.add.graphics();
+        modal.fillStyle(0x000000, 0.8);
+        modal.fillRoundedRect(x - 200, y - 150, 500, 300, 20);
+        modal.setScrollFactor(0);
 
-        //x,y seran el medio de la pantalla
-        const x = width * 0.5
-        const y = height * 0.5
+        this.add.text(x, y - 50, "Has perdido", {
+            fontSize: "40px",
+            fontFamily: "'Press Start 2P', cursive",
+            color: "#FF0000",
+            padding: { left: 10, right: 10, top: 10, bottom: 10 }
+        }).setOrigin(0.5);
 
-        //agregamos el texto
-        this.add.text(x,y,"Apreta Espacio para jugar",{
-            fontSize:"32px",
-            color:"#FFFFFF",
-            backgroundColor:"#000000",
-            shadow:{ fill: true, blur:0, offsetY:0},
-            padding: {left:15, right:15, top:10, bottom:10}
-        })
-        .setOrigin(0.5)
+        this.add.text(x, y + 50, "Presiona ESPACIO para jugar de nuevo", {
+            fontSize: "16px",
+            fontFamily: "'Press Start 2P', cursive",
+            color: "#FFFFFF",
+            padding: { left: 10, right: 10, top: 10, bottom: 10 }
+        }).setOrigin(0.5);
 
-        //Haremos que cuando se aprete el space bar se pueda volver a jugar
-        this.input.keyboard.once("keydown-SPACE", () =>{
-            //parar la scene de GameOver
-            this.scene.stop(SceneKeys.GameOver)
-
-            //Reiniciar la escena de juego
-            this.scene.stop(SceneKeys.Game)
-            this.scene.start(SceneKeys.Game)
-        })
+        this.input.keyboard.once("keydown-SPACE", () => {
+            this.scene.stop(SceneKeys.GameOver);
+            this.scene.start(SceneKeys.Game);
+        });
     }
 }
