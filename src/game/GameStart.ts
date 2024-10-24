@@ -23,7 +23,7 @@ export default class GameStart extends Phaser.Scene
         const y = height * 0.5
 
         //agregamos el texto
-        this.add.text(x,y,"Rocket Mouse",{
+        this.add.text(x,y,"CheemsCape",{
             fontSize:"32px",
             color:"#FFFFFF",
             backgroundColor:"#000000",
@@ -32,7 +32,7 @@ export default class GameStart extends Phaser.Scene
         })
         .setOrigin(0.5)
 
-        this.add.text(x,y,"Apreta Espacio para empezar a jugar",{
+        this.add.text(x,y,"Espacio para empezar a jugar",{
             fontSize:"25px",
             color:"#FFFFFF",
             backgroundColor:"#000000",
