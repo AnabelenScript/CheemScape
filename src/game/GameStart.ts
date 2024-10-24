@@ -1,53 +1,41 @@
 import Phaser from "phaser";
 import SceneKeys from "../consts/SceneKeys";
 
-export default class GameStart extends Phaser.Scene
-{
-    constructor()
-    {
-        super(SceneKeys.GameStart)
+export default class GameStart extends Phaser.Scene {
+    constructor() {
+        super(SceneKeys.GameStart);
     }
 
-    create()
-    {
-        //destructuracion de objetos
-        const {width, height} = this.scale
-        /* Esto es lo mismo que haber escrito 
-        const width = this.scale.width
-        const height = this.scale.height
+    create() {
+        const { width, height } = this.scale;
+        const x = width * 0.5;
+        const y = height * 0.4;
 
-        */
+        const titleText = this.add.text(x, y, "CheemsCape", {
+            fontSize: "60px",
+            fontFamily: "'Press Start 2P', cursive",
+            color: "#FFFFFF",
+            backgroundColor: "#000000",
+            padding: { left: 10, right: 10, top: 10, bottom: 10 }
+        }).setOrigin(0.5);
 
-        //x,y seran el medio de la pantalla
-        const x = width * 0.5
-        const y = height * 0.5
+        const gradient = titleText.context.createLinearGradient(0, 0, 0, titleText.height);
+        gradient.addColorStop(0, "#FFD700");
+        gradient.addColorStop(1, "#dcdcdc");
 
-        //agregamos el texto
-        this.add.text(x,y,"CheemsCape",{
-            fontSize:"32px",
-            color:"#FFFFFF",
-            backgroundColor:"#000000",
-            shadow:{ fill: true, blur:0, offsetY:0},
-            padding: {left:15, right:15, top:0, bottom:400}
-        })
-        .setOrigin(0.5)
+        titleText.setFill(gradient);
 
-        this.add.text(x,y,"Espacio para empezar a jugar",{
-            fontSize:"25px",
-            color:"#FFFFFF",
-            backgroundColor:"#000000",
-            shadow:{ fill: true, blur:0, offsetY:0},
-            padding: {left:0, right:2000, top:200, bottom:10}
-        })
-        .setOrigin(0.1)
+        this.add.text(x, y + 100, "Presiona ESPACIO para comenzar", {
+            fontSize: "16px",
+            fontFamily: "'Press Start 2P', cursive",
+            color: "#00FF00",
+            backgroundColor: "#000000",
+            padding: { left: 10, right: 10, top: 5, bottom: 5 }
+        }).setOrigin(0.5);
 
-        //Haremos que cuando se aprete el space bar se pueda volver a jugar
-        this.input.keyboard.once("keydown-SPACE", () =>{
-            //parar la scene de GameStart
-            this.scene.stop(SceneKeys.GameStart)
-
-            //Reiniciar la escena de juego
-            this.scene.start(SceneKeys.Game)
-        })
+        this.input.keyboard.once("keydown-SPACE", () => {
+            this.scene.stop(SceneKeys.GameStart);
+            this.scene.start(SceneKeys.Game);
+        });
     }
 }
